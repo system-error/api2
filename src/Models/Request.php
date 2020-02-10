@@ -23,7 +23,7 @@ class Request
     }
 
 
-    public function getToken($callBackUrl,$secretId){
+    public function getToken($callBackUrl,$secretId,$appSecret){
         if(isset($_GET['code']) && isset($_GET['state'])) {
             $authorizationCode = $_GET['code'];
             $uri = "https://api.dropboxapi.com/oauth2/token";

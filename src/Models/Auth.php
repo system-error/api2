@@ -11,10 +11,21 @@ class Auth
 //                'response_type&'=>'code',
 //                'state&'=>$state,
 //                'redirect_uri&'=>$redirectUrl];
-//        $uri = "https://www.dropbox.com/oauth2/authorize?client_id={$client_id}&response_type=code&state={$state}&redirect_uri={$redirectUrl}";
-//        echo $uri;
+        $uri = "https://www.dropbox.com/oauth2/authorize?client_id={$client_id}&response_type=code&state={$state}&redirect_uri={$redirectUrl}";
+////        echo $uri;
+//        $uri = "https://www.dropbox.com/oauth2/authorize?client_id={$client_id}&response_type=code";
 
-        return Header("Location: https://www.dropbox.com/oauth2/authorize?client_id={$client_id}&response_type=code&state={$state}&redirect_uri={$redirectUrl}");
+//        $headers = ['Content-Type: application/x-www-form-urlencoded'];
+//        $ch = curl_init();
+//        curl_setopt($ch, CURLOPT_POST, $uri);
+//        curl_setopt($ch, CURLOPT_URL, true);
+//        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//        curl_setopt($ch,CURLOPT_HTTPHEADER,$headers);
+//
+//        $r = curl_exec($ch);
+        return $uri;
+//        return Header("Location: https://www.dropbox.com/oauth2/authorize?client_id={$client_id}&response_type=code&state={$state}&redirect_uri={$redirectUrl}");
 
     }
 
