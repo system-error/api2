@@ -1,7 +1,6 @@
 <?php
 require "src/Models/Auth.php";
 require "config.php";
-//
 $auth = new Auth();
 
 $path = $auth->getAuthorization($secretId,$callBackUrl);

@@ -1,37 +1,28 @@
 <?php
-
+require "config.php";
 session_start();
 
 require "src/Models/Request.php";
 require "src/Models/Users.php";
-require "config.php";
-$user = new Users();
-$dropbox = new Request();
-$request= $dropbox->getToken($callBackUrl,$secretId,$appSecret);
-$token = json_decode($request);
 
+$user = new Users();
+
+$token = new Request();
 //$oauth_token = $_SESSION["accessToken"];
 //echo "<br>";
 //print_r($_SESSION);
+//$toke = new Request();
+$token = $token->getToken($callBackUrl,$secretId,$appSecret);
 
-if(!isset($token->access_token)){
-    $myfile = fopen("myText.txt", "r");
-// Output one line until end-of-file
-    while(!feof($myfile)) {
-        $access_token =  fgets($myfile);
-    }
-//    echo $access_token;
-    $user1 = $user->getCurrentAccount($access_token);
-    fclose($myfile);
-}else{
-    $content =  $token->access_token;
-    $fp = fopen("myText.txt","wb");
-    fwrite($fp,$content);
-    fclose($fp);
-    $user1 = $user->getCurrentAccount($token->access_token);
-}
 
-print_r($user1);
+$test =$user->getCurrentAccount($token);
+print_r($test);
+echo "<br>";
+echo $test['name']['given_name'];
+echo "<br>";
+
+$test = $user->getAccount($test['account_id'],$token);
+print_r($test);
 
 
 //if(isset($_POST['submit'])){
