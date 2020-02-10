@@ -4,6 +4,7 @@ session_start();
 
 require "src/Models/Request.php";
 require "src/Models/Users.php";
+require "src/Models/Files.php";
 
 $user = new Users();
 
@@ -15,14 +16,22 @@ $token = new Request();
 $token = $token->getToken($callBackUrl,$secretId,$appSecret);
 
 
-$test =$user->getCurrentAccount($token);
-print_r($test);
+//$test =$user->getCurrentAccount($token);
+//print_r($test);
+//echo "<br>";
+//echo $test['name']['given_name'];
+//echo "<br>";
+//
+//$test = $user->getAccount($test['account_id'],$token);
+//print_r($test);
+
 echo "<br>";
-echo $test['name']['given_name'];
 echo "<br>";
 
-$test = $user->getAccount($test['account_id'],$token);
-print_r($test);
+$files = new Files();
+
+$filesMetadata = $files->get_metadata('/cyberCrime',false,false,false,$token);
+print_r($filesMetadata);
 
 
 //if(isset($_POST['submit'])){
