@@ -31,7 +31,8 @@ class Files
          return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
      }
 
-    /**
+    /** Created the entry class to call the different files
+     *  that I want to copy from one dest to other
      * @param $entries
      * @param bool $autorename
      * @return mixed|string
@@ -42,6 +43,43 @@ class Files
          return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
      }
 
+    public function copyBatchCheck($asyncJobId){
+        $endPoint = "https://api.dropboxapi.com/2/files/copy_batch/check_v2";
+        $data = json_encode(array("async_job_id" => $asyncJobId));
+        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
+    }
+
+    public function copyReferenceGet($path){
+        $endPoint = "https://api.dropboxapi.com/2/files/copy_reference/get";
+        $data = json_encode(array( "path" => $path));
+        $copy_reference = $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
+
+//        depending what I want I have the choise to take only the reference or all the results
+
+//        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
+
+        //  I can call the "copyReferenceSave" function from here, I don't understand why it sends error
+//        return $this->copyReferenceSave($copy_reference['copy_reference'],$path);
+        return $copy_reference['copy_reference'];
+    }
+
+    public function copyReferenceSave($copyReference,$path){
+        $endPoint = "https://api.dropboxapi.com/2/files/copy_reference/save";
+        $data = json_encode(array( "copy_reference" => $copyReference,"path" => $path));
+        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
+    }
+
+    public function createFolder($path,$autorename=false){
+        $endPoint = "https://api.dropboxapi.com/2/files/create_folder_v2";
+        $data = json_encode(array( "path" => $path,"autorename" => $autorename));
+        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
+    }
+
+    public function createFolderBatch($paths,$autorename=false,$forceAsync = false){
+        $endPoint = "https://api.dropboxapi.com/2/files/create_folder_batch";
+        $data = json_encode(array( "paths" =>$paths,"autorename" => $autorename,'force_async'=>$forceAsync));
+        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
+    }
 
     /**
      * @param $path
@@ -109,6 +147,8 @@ class Files
 
 
     private function validateTheData($theData){
+        print_r($theData);
+        die();
         if($theData == null || isset($theData['error'])){
             if(isset($theData['error'])){
                 return $theData['error_summary'];

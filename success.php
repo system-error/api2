@@ -53,21 +53,30 @@ echo "<br>";
 //$thefiles = $files->copy('/Chapter 1b.pptx','/python/Chapter 1b.pptx',false,false,false);
 //print_r($thefiles);
 
-//$file1 = array('/python/' => '/cyberCrime/');
-//$file2 = array('/python/FSM.py' => '/cyberCrime/FSM.py');
-//$file3 = array('/python/states.py'=>'/cyberCrime/states.py');
-//'from_path' => '/python/states.py','to_path'=>'/cyberCrime/states.py'
 
 
 
-$entries = [$entry->getEntries('/python/FSM.py','/cyberCrime/FSM.py'),$entry->getEntries('/python/states.py','/cyberCrime/states.py')] ;
+//$entries = [$entry->getEntries('/python/FSM_OOP.py','/cyberCrime/FSM_OOP.py'),$entry->getEntries('/python/FSM.py','/cyberCrime/FSM.py'),$entry->getEntries('/python/states.py','/cyberCrime/states.py')] ;
+//$thefiles = $files->copyBatch($entries,false);
+//print_r($thefiles);
+//echo "<br>";
+//$checkFiles = $files->copyBatchCheck("dbjid:AADv67hzYk5-MmXvfFI0xTtH6O4MRucJDV4Gj5-IcFtU54USYrxk6Neaam1qARNebTmSZYf_TlguJ1rUV6XfQq_Z");
+//print_r($checkFiles);
 
-$thefiles = $files->copyBatch($entries,false);
-print_r($thefiles);
+//$thefiles = $files->copyReferenceGet('/Chapter 1b.pptx');
+//
+//print_r($thefiles);
 
+//$thefiles = $files->copyReferenceSave("AAAAAAVa1fx6ZnVwaGYzcGpodGQ",'/Chapter 1b.pptx');
+//print_r($thefiles);
 
+//$thefiles = $files->createFolder("/python/test",false);
+//print_r($thefiles);
 
-
+//$paths = array('/python/test','/python/test1','/python/tes2');
+////$paths = $entry->getMultiplePaths($paths);
+//$thefiles = $files->createFolderBatch($paths,false,false);
+//print_r($thefiles);
 
 
 
