@@ -4,12 +4,10 @@ require "config.php";
 
 class Request
 {
-    private $accessToken = '';
 
 
-    public static function postRequest($endpoint, $headers, $data, $json = TRUE,$accessToken='') {
-
-        $ch = curl_init($endpoint);
+    public static function postRequest($endPoint, $headers, $data, $json = TRUE,$accessToken='') {
+        $ch = curl_init($endPoint);
         array_push($headers, "Authorization: Bearer " . $accessToken);
         curl_setopt($ch, CURLOPT_POST, TRUE);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -21,7 +19,7 @@ class Request
         if ($json)
             return json_decode($r, true);
         else
-            return $r;
+           return $r;
     }
 
     public function getToken($callBackUrl,$secretId,$appSecret){

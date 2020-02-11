@@ -3,18 +3,121 @@
 
 class Files
 {
-    public function get_metadata($path, $include_media_info = FALSE, $include_deleted = FALSE, $include_has_explicit_shared_members = FALSE,$accessToken) {
-//        echo $accessToken;
-        $endpoint = "https://api.dropboxapi.com/2/files/get_metadata";
-        $headers = array(
-            "Content-Type: application/json"
-        );
-        $postdata = json_encode(array( "path" => $path, "include_media_info" => $include_media_info, "include_deleted" => $include_deleted, "include_has_explicit_shared_members" => $include_has_explicit_shared_members));
-        echo $postdata;
-        $returnData = Request::postRequest($endpoint, $headers, $postdata,true,$accessToken);
+     private $headers= array("Content-Type: application/json");
+     private $accessToken;
 
-        return $returnData;
+     function __construct($accessToken){
+         $this->accessToken = $accessToken;
+     }
 
+    /**
+     *  The from_path is the filename that we want to copy and
+     *  the to_path is the destination folder with the name of the file
+     *  If we want to copy the text.txt in the folder TestFolder we should write
+     *  from_path = /text.txt (this if we are in the home page) and
+     *  to_path = /TestFolder/text.txt
+     *
+     * @param $from_path
+     * @param $to_path
+     * @param bool $allow_shared_folder
+     * @param bool $autorename
+     * @param bool $allow_ownership_transfer
+     * @return mixed|string
+     */
+     public function copy($from_path,$to_path,$allow_shared_folder=false,$autorename=false,$allow_ownership_transfer=false){
+         $endPoint = "https://api.dropboxapi.com/2/files/copy_v2";
+         $data = json_encode(array( "from_path" => $from_path, "to_path" => $to_path,
+             "allow_shared_folder" => $allow_shared_folder, "autorename" => $autorename, "allow_ownership_transfer" => $allow_ownership_transfer));
+         return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
+     }
+
+    /**
+     * @param $entries
+     * @param bool $autorename
+     * @return mixed|string
+     */
+     public function copyBatch($entries, $autorename=false){
+         $endPoint = "https://api.dropboxapi.com/2/files/copy_batch_v2";
+         $data = json_encode(array("entries" => $entries, "autorename" =>$autorename));
+         return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
+     }
+
+
+    /**
+     * @param $path
+     * @param bool $include_media_info
+     * @param bool $include_deleted
+     * @param bool $include_has_explicit_shared_members
+     * @return mixed|string
+     */
+
+    public function getMetadata($path, $include_media_info = false, $include_deleted = false, $include_has_explicit_shared_members = false) {
+        $endPoint = "https://api.dropboxapi.com/2/files/get_metadata";
+        $data = json_encode(array( "path" => $path, "include_media_info" => $include_media_info,
+                    "include_deleted" => $include_deleted, "include_has_explicit_shared_members" => $include_has_explicit_shared_members));
+        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
+    }
+
+
+    /**
+     * @param $path
+     * @param bool $recursive
+     * @param bool $include_media_info
+     * @param bool $include_deleted
+     * @param bool $include_has_explicit_shared_members
+     * @param bool $include_mounted_folders
+     * @param bool $include_non_downloadable_files
+     * @return mixed|string
+     */
+    public function listFolder($path, $recursive = false, $include_media_info = false, $include_deleted =false, $include_has_explicit_shared_members=false, $include_mounted_folders=true, $include_non_downloadable_files=true){
+        $endPoint = "https://api.dropboxapi.com/2/files/list_folder";
+        $data = json_encode(array("path" => $path, "recursive" => $recursive, "include_media_info" => $include_media_info, "include_deleted" => $include_deleted,
+                    "include_has_explicit_shared_members" => $include_has_explicit_shared_members,"include_mounted_folders" => $include_mounted_folders,
+                    "include_non_downloadable_files" => $include_non_downloadable_files));
+        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
+    }
+
+    /**
+     * @param $cursor
+     * @return mixed|string
+     */
+
+    public function listFolderContinue($cursor){
+        $endPoint = "https://api.dropboxapi.com/2/files/list_folder/continue";
+        $data = json_encode(array("cursor" => $cursor));
+        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
+    }
+
+    /**
+     * @param $path
+     * @param bool $recursive
+     * @param bool $include_media_info
+     * @param bool $include_deleted
+     * @param bool $include_has_explicit_shared_members
+     * @param bool $include_mounted_folders
+     * @param bool $include_non_downloadable_files
+     * @return mixed|string
+     */
+
+    public function getLatestCursor($path, $recursive = false, $include_media_info = false, $include_deleted =false, $include_has_explicit_shared_members=false, $include_mounted_folders=true, $include_non_downloadable_files=true){
+        $endPoint = "https://api.dropboxapi.com/2/files/list_folder/get_latest_cursor";
+        $data = json_encode(array("path" => $path, "recursive" => $recursive, "include_media_info" => $include_media_info, "include_deleted" => $include_deleted,
+            "include_has_explicit_shared_members" => $include_has_explicit_shared_members,"include_mounted_folders" => $include_mounted_folders,
+            "include_non_downloadable_files" => $include_non_downloadable_files));
+        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
+    }
+
+
+    private function validateTheData($theData){
+        if($theData == null || isset($theData['error'])){
+            if(isset($theData['error'])){
+                return $theData['error_summary'];
+            }else{
+                return "Something is wrong";
+            }
+        }else{
+            return $theData;
+        }
     }
 
 }

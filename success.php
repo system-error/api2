@@ -5,33 +5,89 @@ session_start();
 require "src/Models/Request.php";
 require "src/Models/Users.php";
 require "src/Models/Files.php";
-
-$user = new Users();
+require "src/Models/Entry.php";
 
 $token = new Request();
-//$oauth_token = $_SESSION["accessToken"];
-//echo "<br>";
-//print_r($_SESSION);
-//$toke = new Request();
 $token = $token->getToken($callBackUrl,$secretId,$appSecret);
+$user = new Users($token);
+$files = new Files($token);
+$entry = new Entry();
+//$token = $_SESSION["accessToken"];
 
 
-//$test =$user->getCurrentAccount($token);
+
+//$test =$user->getCurrentAccount();
 //print_r($test);
 //echo "<br>";
 //echo $test['name']['given_name'];
 //echo "<br>";
 //
-//$test = $user->getAccount($test['account_id'],$token);
+//$test = $user->getAccount($test['account_id']);
 //print_r($test);
 
 echo "<br>";
 echo "<br>";
 
-$files = new Files();
 
-$filesMetadata = $files->get_metadata('/cyberCrime',false,false,false,$token);
-print_r($filesMetadata);
+
+//$thefiles = $files->getMetadata('/Chapter 1b.pptx',false,false,false);
+//print_r($files);
+//echo "<br>";
+//echo "<br>";
+//$thefiles = $files->listFolder('',true,false,false,false,true,true);
+//print_r($files);
+//echo "<br>";
+//echo count($thefiles['entries']);
+//echo "<br>";
+//echo $thefiles['has_more'];
+//echo "<br>";
+//echo "<br>";
+//$thefiles = $files->listFolderContinue($thefiles['cursor']);
+//print_r($thefiles);
+//echo "<br>";
+//echo "<br>";
+
+
+
+
+//$thefiles = $files->copy('/Chapter 1b.pptx','/python/Chapter 1b.pptx',false,false,false);
+//print_r($thefiles);
+
+//$file1 = array('/python/' => '/cyberCrime/');
+//$file2 = array('/python/FSM.py' => '/cyberCrime/FSM.py');
+//$file3 = array('/python/states.py'=>'/cyberCrime/states.py');
+//'from_path' => '/python/states.py','to_path'=>'/cyberCrime/states.py'
+
+
+
+$entries = [$entry->getEntries('/python/FSM.py','/cyberCrime/FSM.py'),$entry->getEntries('/python/states.py','/cyberCrime/states.py')] ;
+
+$thefiles = $files->copyBatch($entries,false);
+print_r($thefiles);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //if(isset($_POST['submit'])){

@@ -1,31 +1,34 @@
 <?php
 
-
-
 class Users
 {
-    public function getCurrentAccount($accessToken){
-        $endPoint = "https://api.dropboxapi.com/2/users/get_current_account";
-        $headers = array(
-            "Content-Type: application/json"
-        );
-        $data = "null";
-        $theData =  Request::postRequest($endPoint,$headers,$data,true,$accessToken);
+    private $headers= array("Content-Type: application/json");
+    private $accessToken;
 
-        return $theData;
+
+    function __construct($accessToken){
+        $this->accessToken = $accessToken;
     }
 
-    public function getAccount($accountId,$accessToken){
-//        echo $accountId;
+    public function getCurrentAccount(){
+        $endPoint = "https://api.dropboxapi.com/2/users/get_current_account";
+        $data = "null";
+        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
+    }
+
+    public function getAccount($accountId){
+
         $endPoint = "https://api.dropboxapi.com/2/users/get_account";
-        $headers = array(
-            "Content-Type: application/json"
-        );
         $data = json_encode(array('account_id'=>$accountId));
-//        echo $data;
-        $theData =  Request::postRequest($endPoint,$headers,$data,true,$accessToken);
-//        echo $theData;
-        return $theData;
+        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
+    }
+
+    private function validateTheData($theData){
+        if($theData == null){
+            return "Something is wrong";
+        }else{
+            return $theData;
+        }
     }
 
 }
