@@ -54,11 +54,11 @@ class Files
         $data = json_encode(array( "path" => $path));
         $copy_reference = $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
 
-//        depending what I want I have the choise to take only the reference or all the results
+//        depending what I want I have the choice to take only the reference or all the results
 
 //        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
 
-        //  I can call the "copyReferenceSave" function from here, I don't understand why it sends error
+        //  I can call the "copyReferenceSave" function from here, I don't understand why sends error
 //        return $this->copyReferenceSave($copy_reference['copy_reference'],$path);
         return $copy_reference['copy_reference'];
     }
