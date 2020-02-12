@@ -87,6 +87,18 @@ class Files
         return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
     }
 
+    public function deleteFiles($path){
+        $endPoint = "https://api.dropboxapi.com/2/files/delete_v2";
+        $data = $data = json_encode(array( "path" => $path));
+        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
+    }
+
+    public function deleteFilesBatch($paths){
+        $endPoint = "https://api.dropboxapi.com/2/files/delete_batch";
+        $data = json_encode(array( "entries" => $paths));
+        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
+    }
+
 
     /**
      * @param $path
