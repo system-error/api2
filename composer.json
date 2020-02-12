@@ -3,5 +3,8 @@
     "psr-4" : {
       "api\\": "src/"
     }
+  },
+  "require": {
+    "ext-json": "*"
   }
 }

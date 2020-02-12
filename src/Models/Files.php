@@ -6,10 +6,10 @@ class Files
     private $headers= array("Content-Type: application/json");
     private $accessToken;
 
-    function __construct($accessToken){
-        $this->accessToken = $accessToken;
-        echo "test";
-    }
+     function __construct($accessToken){
+         $this->accessToken = $accessToken;
+     }
+
 
     /**
      *  The from_path is the filename that we want to copy and
@@ -131,6 +131,7 @@ class Files
      * @param bool $includeNonDownloadableFiles
      * @return mixed|string
      */
+
     public function listFolder($path, $recursive = false, $includeMediaInfo = false, $includeDeleted =false,
                                $includeHasExplicitSharedMembers=false, $includeMountedFolders=true, $includeNonDownloadableFiles=true){
         $endPoint = "https://api.dropboxapi.com/2/files/list_folder";
