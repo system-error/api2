@@ -4,7 +4,7 @@ require "config.php";
 
 class Auth
 {
-
+    
     function getAuthorization($secretId,$callBackUrl){;
         $state = $this->randomStringForState();
 //        $data = ['client_id&'=> $client_id,
@@ -28,8 +28,6 @@ class Auth
 //        return Header("Location: https://www.dropbox.com/oauth2/authorize?client_id={$client_id}&response_type=code&state={$state}&redirect_uri={$redirectUrl}");
 
     }
-
-
 
     private function randomStringForState(){
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

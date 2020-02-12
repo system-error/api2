@@ -17,8 +17,8 @@ class Files
      *  from_path = /text.txt (this if we are in the home page) and
      *  to_path = /TestFolder/text.txt
      *
-     * @param $fromPath
-     * @param $toPath
+     * @param string $fromPath
+     * @param string $toPath
      * @param bool $allowShared_folder
      * @param bool $autorename
      * @param bool $allowOwnershipTransfer
@@ -30,12 +30,9 @@ class Files
              "allow_shared_folder" => $allowShared_folder, "autorename" => $autorename, "allow_ownership_transfer" => $allowOwnershipTransfer));
          return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
      }
-
-
-
     /** Created the entry class to call the different files
      *  that I want to copy from one dest to other
-     * @param $entries
+     * @param list $entries
      * @param bool $autorename
      * @return mixed|string
      */
@@ -101,9 +98,25 @@ class Files
         return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
     }
 
+    public function deleteFilesBatchCheck($asyncJobId){
+        $endPoint = "https://api.dropboxapi.com/2/files/delete_batch/check";
+        $data = json_encode(array( "async_job_id" => $asyncJobId));
+        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
+    }
+
+    public function downloadFile($path){
+         $endPoint = "https://content.dropboxapi.com/2/files/download";
+         $headers = array("Content-Type: text/plain",
+             "Dropbox-API-Arg: {\"path\": \"$path\"}");
+         $data = '';
+         $returnData =  $this->validateTheData(Request::postRequest($endPoint,$headers,$data,false,$this->accessToken));
+         print_r($returnData);
+         die();
+    }
+    
 
     /**
-     * @param $path
+     * @param string $path
      * @param bool $includeMediaInfo
      * @param bool $includeDeleted
      * @param bool $includeHasExplicitSharedMembers
@@ -116,10 +129,8 @@ class Files
                     "include_deleted" => $includeDeleted, "include_has_explicit_shared_members" => $includeHasExplicitSharedMembers));
         return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
     }
-
-
     /**
-     * @param $path
+     * @param string $path
      * @param bool $recursive
      * @param bool $includeMediaInfo
      * @param bool $includeDeleted
@@ -149,7 +160,7 @@ class Files
     }
 
     /**
-     * @param $path
+     * @param string $path
      * @param bool $recursive
      * @param bool $includeMediaInfo
      * @param bool $includeDeleted
