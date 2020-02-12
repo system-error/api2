@@ -104,6 +104,11 @@ class Files
         return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
     }
 
+    /**
+     *
+     *
+     * @param $path
+     */
     public function downloadFile($path){
          $filename = basename($path);
          $path = json_encode(array( "path" => $path));
@@ -116,7 +121,26 @@ class Files
          fwrite($fp,$thedata);
          fclose($fp);
     }
-    
+
+    public function downloadZip($path){
+        $filename = basename($path);
+        $path = json_encode(array( "path" => $path));
+        $endPoint = "https://content.dropboxapi.com/2/files/download_zip";
+        $headers = array("Content-Type: text/plain",
+            "Dropbox-API-Arg: ".$path);
+        $data = '';
+        $thedata = $this->validateTheData(Request::postRequest($endPoint,$headers,$data,false,$this->accessToken));
+        $fp = fopen($filename.".zip","wb");
+        if(fwrite($fp,$thedata)){
+            echo "success";
+            fclose($fp);
+        }else{
+            echo "something";
+            fclose($fp);
+        }
+
+    }
+
 
     /**
      * @param string $path
@@ -125,13 +149,13 @@ class Files
      * @param bool $includeHasExplicitSharedMembers
      * @return mixed|string
      */
-
     public function getMetadata($path, $includeMediaInfo = false, $includeDeleted = false, $includeHasExplicitSharedMembers = false) {
         $endPoint = "https://api.dropboxapi.com/2/files/get_metadata";
         $data = json_encode(array( "path" => $path, "include_media_info" => $includeMediaInfo,
                     "include_deleted" => $includeDeleted, "include_has_explicit_shared_members" => $includeHasExplicitSharedMembers));
         return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
     }
+
     /**
      * @param string $path
      * @param bool $recursive
@@ -194,5 +218,7 @@ class Files
             return $theData;
         }
     }
+
+    private function validateTheDownloadingProcess
 
 }

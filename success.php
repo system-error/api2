@@ -91,7 +91,8 @@ echo "<br>";
 //print_r($thefiles);
 
 
-$thefiles =$files->downloadFile('/test3.txt');
+//$thefiles =$files->downloadFile('/test3.txt');
+$thefiles =$files->downloadZip('/python');
 //print_r($thefiles);
 
 
