@@ -3,12 +3,12 @@
 
 class Files
 {
-     private $headers= array("Content-Type: application/json");
-     private $accessToken;
+    private $headers= array("Content-Type: application/json");
+    private $accessToken;
 
-     function __construct($accessToken){
-         $this->accessToken = $accessToken;
-     }
+    function __construct($accessToken){
+        $this->accessToken = $accessToken;
+    }
 
     /**
      *  The from_path is the filename that we want to copy and
@@ -24,12 +24,12 @@ class Files
      * @param bool $allow_ownership_transfer
      * @return mixed|string
      */
-     public function copy($from_path,$to_path,$allow_shared_folder=false,$autorename=false,$allow_ownership_transfer=false){
-         $endPoint = "https://api.dropboxapi.com/2/files/copy_v2";
-         $data = json_encode(array( "from_path" => $from_path, "to_path" => $to_path,
-             "allow_shared_folder" => $allow_shared_folder, "autorename" => $autorename, "allow_ownership_transfer" => $allow_ownership_transfer));
-         return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
-     }
+    public function copy($from_path,$to_path,$allow_shared_folder=false,$autorename=false,$allow_ownership_transfer=false){
+        $endPoint = "https://api.dropboxapi.com/2/files/copy_v2";
+        $data = json_encode(array( "from_path" => $from_path, "to_path" => $to_path,
+            "allow_shared_folder" => $allow_shared_folder, "autorename" => $autorename, "allow_ownership_transfer" => $allow_ownership_transfer));
+        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
+    }
 
     /** Created the entry class to call the different files
      *  that I want to copy from one dest to other
@@ -37,11 +37,11 @@ class Files
      * @param bool $autorename
      * @return mixed|string
      */
-     public function copyBatch($entries, $autorename=false){
-         $endPoint = "https://api.dropboxapi.com/2/files/copy_batch_v2";
-         $data = json_encode(array("entries" => $entries, "autorename" =>$autorename));
-         return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
-     }
+    public function copyBatch($entries, $autorename=false){
+        $endPoint = "https://api.dropboxapi.com/2/files/copy_batch_v2";
+        $data = json_encode(array("entries" => $entries, "autorename" =>$autorename));
+        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
+    }
 
     public function copyBatchCheck($asyncJobId){
         $endPoint = "https://api.dropboxapi.com/2/files/copy_batch/check_v2";

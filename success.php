@@ -80,6 +80,16 @@ echo "<br>";
 
 
 
+//$thefiles = $files->deleteFiles("/test.txt");
+//print_r($thefiles);
+
+$paths = array('/test1.txt','/test2.txt','/test3.txt');
+
+$paths = $entry->getMultiplePaths($paths);
+
+$thefiles = $files->deleteFilesBatch($paths);
+print_r($thefiles);
+
 
 
 

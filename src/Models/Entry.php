@@ -8,9 +8,17 @@ class Entry
         return array('from_path'=> $fromPath,'to_path' => $toPath);
     }
 
-    public function getMultiplePaths(array $paths){
-        return array($paths);
+    public function getMultiplePaths($paths){
+        $path = array();
+        for($x=0; $x<count($paths); $x++){
+            $path[$x] = array('path'=>$paths[$x]);
+        }
+        return $path;
+
+
     }
+
+
 
 
 
