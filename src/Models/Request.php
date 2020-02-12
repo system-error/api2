@@ -8,8 +8,6 @@ class Request
     public static function postRequest($endPoint, $headers, $data, $json = TRUE,$accessToken='') {
         $ch = curl_init($endPoint);
         array_push($headers, "Authorization: Bearer " . $accessToken);
-        print_r($headers);
-        die();
         curl_setopt($ch, CURLOPT_POST, TRUE);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);

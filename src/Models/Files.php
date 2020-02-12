@@ -88,7 +88,7 @@ class Files
 
     public function deleteFiles($path){
         $endPoint = "https://api.dropboxapi.com/2/files/delete_v2";
-        $data = $data = json_encode(array( "path" => $path));
+        $data = json_encode(array( "path" => $path));
         return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
     }
 
@@ -105,13 +105,16 @@ class Files
     }
 
     public function downloadFile($path){
+         $filename = basename($path);
+         $path = json_encode(array( "path" => $path));
          $endPoint = "https://content.dropboxapi.com/2/files/download";
          $headers = array("Content-Type: text/plain",
-             "Dropbox-API-Arg: {\"path\": \"$path\"}");
+             "Dropbox-API-Arg: ".$path);
          $data = '';
-         $returnData =  $this->validateTheData(Request::postRequest($endPoint,$headers,$data,false,$this->accessToken));
-         print_r($returnData);
-         die();
+         $thedata = $this->validateTheData(Request::postRequest($endPoint,$headers,$data,false,$this->accessToken));
+         $fp = fopen($filename,"wb");
+         fwrite($fp,$thedata);
+         fclose($fp);
     }
     
 
@@ -181,8 +184,6 @@ class Files
 
 
     private function validateTheData($theData){
-        print_r($theData);
-        die();
         if($theData == null || isset($theData['error'])){
             if(isset($theData['error'])){
                 return $theData['error_summary'];

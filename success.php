@@ -91,7 +91,7 @@ echo "<br>";
 //print_r($thefiles);
 
 
-$thefiles =$files->downloadFile('/Chapter4.pptx');
+$thefiles =$files->downloadFile('/test3.txt');
 //print_r($thefiles);
 
 
