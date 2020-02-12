@@ -8,7 +8,6 @@ class Files
 
      function __construct($accessToken){
          $this->accessToken = $accessToken;
-         echo "test";
      }
 
     /**
