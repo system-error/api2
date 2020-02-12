@@ -24,18 +24,21 @@ class Files
      * @param bool $allowOwnershipTransfer
      * @return mixed|string
      */
+
      public function copy($fromPath,$toPath,$allowShared_folder=false,$autorename=false,$allowOwnershipTransfer=false){
          $endPoint = "https://api.dropboxapi.com/2/files/copy_v2";
          $data = json_encode(array( "from_path" => $fromPath, "to_path" => $toPath,
              "allow_shared_folder" => $allowShared_folder, "autorename" => $autorename, "allow_ownership_transfer" => $allowOwnershipTransfer));
          return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
      }
+
     /** Created the entry class to call the different files
      *  that I want to copy from one dest to other
      * @param list $entries
      * @param bool $autorename
      * @return mixed|string
      */
+
      public function copyBatch($entries, $autorename=false){
          $endPoint = "https://api.dropboxapi.com/2/files/copy_batch_v2";
          $data = json_encode(array("entries" => $entries, "autorename" =>$autorename));
@@ -53,12 +56,12 @@ class Files
         $data = json_encode(array( "path" => $path));
         $copy_reference = $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
 
-//        depending what I want I have the choice to take only the reference or all the results
+        // depending what I want I have the choice to take only the reference or all the results
 
-//        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
+        // return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
 
         //  I can call the "copyReferenceSave" function from here, I don't understand why it sends error
-//        return $this->copyReferenceSave($copy_reference['copy_reference'],$path);
+        // return $this->copyReferenceSave($copy_reference['copy_reference'],$path);
         return $copy_reference['copy_reference'];
     }
 
@@ -107,40 +110,31 @@ class Files
     /**
      *
      *
-     * @param $path
+     * @param string $path
+     * @return string
      */
+
     public function downloadFile($path){
          $filename = basename($path);
-         $path = json_encode(array( "path" => $path));
          $endPoint = "https://content.dropboxapi.com/2/files/download";
-         $headers = array("Content-Type: text/plain",
+         $headers = array("Content-Type: application/octet-stream",
              "Dropbox-API-Arg: ".$path);
          $data = '';
          $thedata = $this->validateTheData(Request::postRequest($endPoint,$headers,$data,false,$this->accessToken));
          $fp = fopen($filename,"wb");
-         fwrite($fp,$thedata);
-         fclose($fp);
+        return $this->validateTheDownloadingProcess($fp,$thedata);
     }
 
     public function downloadZip($path){
         $filename = basename($path);
-        $path = json_encode(array( "path" => $path));
         $endPoint = "https://content.dropboxapi.com/2/files/download_zip";
-        $headers = array("Content-Type: text/plain",
+        $headers = array("Content-Type: application/octet-stream",
             "Dropbox-API-Arg: ".$path);
         $data = '';
         $thedata = $this->validateTheData(Request::postRequest($endPoint,$headers,$data,false,$this->accessToken));
         $fp = fopen($filename.".zip","wb");
-        if(fwrite($fp,$thedata)){
-            echo "success";
-            fclose($fp);
-        }else{
-            echo "something";
-            fclose($fp);
-        }
-
+        return $this->validateTheDownloadingProcess($fp,$thedata);
     }
-
 
     /**
      * @param string $path
@@ -149,11 +143,19 @@ class Files
      * @param bool $includeHasExplicitSharedMembers
      * @return mixed|string
      */
+
     public function getMetadata($path, $includeMediaInfo = false, $includeDeleted = false, $includeHasExplicitSharedMembers = false) {
         $endPoint = "https://api.dropboxapi.com/2/files/get_metadata";
         $data = json_encode(array( "path" => $path, "include_media_info" => $includeMediaInfo,
                     "include_deleted" => $includeDeleted, "include_has_explicit_shared_members" => $includeHasExplicitSharedMembers));
         return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
+    }
+
+    public function getPrieview($path) {
+        $endPoint = "https://content.dropboxapi.com/2/files/get_preview";
+        $headers = array("Content-Type: text/plain; charset=utf-8","Dropbox-API-Arg: {\"path\":\"$path\"}");
+        $data = '';
+        return $this->validateTheData(Request::postRequest($endPoint,$headers,$data,false,$this->accessToken));
     }
 
     /**
@@ -166,6 +168,7 @@ class Files
      * @param bool $includeNonDownloadableFiles
      * @return mixed|string
      */
+
     public function listFolder($path, $recursive = false, $includeMediaInfo = false, $includeDeleted =false,
                                $includeHasExplicitSharedMembers=false, $includeMountedFolders=true, $includeNonDownloadableFiles=true){
         $endPoint = "https://api.dropboxapi.com/2/files/list_folder";
@@ -208,6 +211,8 @@ class Files
 
 
     private function validateTheData($theData){
+        echo $theData;
+        die();
         if($theData == null || isset($theData['error'])){
             if(isset($theData['error'])){
                 return $theData['error_summary'];
@@ -219,6 +224,15 @@ class Files
         }
     }
 
-    private function validateTheDownloadingProcess{}
+    private function validateTheDownloadingProcess($fp,$thedata){
+        if(fwrite($fp,$thedata)){
+            fclose($fp);
+            return "success";
+        }else{
+            fclose($fp);
+            return "something";
+
+        }
+    }
 
 }

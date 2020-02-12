@@ -12,7 +12,7 @@ $token = $token->getToken($callBackUrl,$secretId,$appSecret);
 $user = new Users($token);
 $files = new Files($token);
 $entry = new Entry();
-//$token = $_SESSION["accessToken"];
+//$token = $_SESSION["accessToken"]; if I want it
 
 
 
@@ -91,11 +91,12 @@ echo "<br>";
 //print_r($thefiles);
 
 
-//$thefiles =$files->downloadFile('/test3.txt');
-$thefiles =$files->downloadZip('/python');
+//$thefiles =$files->downloadFile('/Chapter4.pptx');
+//$thefiles =$files->downloadZip('/python');
+//echo $thefiles;
 //print_r($thefiles);
-
-
+$thefiles =$files->getPrieview('/Christos Dousmanopoulos_CV.docx');
+print_r($thefiles);
 
 
 

@@ -8,16 +8,18 @@ class Request
     public static function postRequest($endPoint, $headers, $data, $json = TRUE,$accessToken='') {
         $ch = curl_init($endPoint);
         array_push($headers, "Authorization: Bearer " . $accessToken);
+        print_r($headers);
+        die();
         curl_setopt($ch, CURLOPT_POST, TRUE);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        $r = curl_exec($ch);
+        $response = curl_exec($ch);
         curl_close($ch);
         if ($json)
-            return json_decode($r, true);
+            return json_decode($response, true);
         else
-           return $r;
+           return $response;
     }
 
     public function getToken($callBackUrl,$secretId,$appSecret){
@@ -32,10 +34,10 @@ class Request
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
             curl_setopt($ch, CURLOPT_USERPWD, "$secretId:$appSecret");
-            $r = curl_exec($ch);
+            $response = curl_exec($ch);
 
 
-            $token = json_decode($r);
+            $token = json_decode($response);
 
             if(!isset($token->access_token)){
                 $myfile = fopen("myToken.txt", "r");
