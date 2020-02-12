@@ -18,17 +18,17 @@ class Files
      *  from_path = /text.txt (this if we are in the home page) and
      *  to_path = /TestFolder/text.txt
      *
-     * @param $from_path
-     * @param $to_path
-     * @param bool $allow_shared_folder
+     * @param $fromPath
+     * @param $toPath
+     * @param bool $allowShared_folder
      * @param bool $autorename
-     * @param bool $allow_ownership_transfer
+     * @param bool $allowOwnershipTransfer
      * @return mixed|string
      */
-     public function copy($from_path,$to_path,$allow_shared_folder=false,$autorename=false,$allow_ownership_transfer=false){
+     public function copy($fromPath,$toPath,$allowShared_folder=false,$autorename=false,$allowOwnershipTransfer=false){
          $endPoint = "https://api.dropboxapi.com/2/files/copy_v2";
-         $data = json_encode(array( "from_path" => $from_path, "to_path" => $to_path,
-             "allow_shared_folder" => $allow_shared_folder, "autorename" => $autorename, "allow_ownership_transfer" => $allow_ownership_transfer));
+         $data = json_encode(array( "from_path" => $fromPath, "to_path" => $toPath,
+             "allow_shared_folder" => $allowShared_folder, "autorename" => $autorename, "allow_ownership_transfer" => $allowOwnershipTransfer));
          return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
      }
 
