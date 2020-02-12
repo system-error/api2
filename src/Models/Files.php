@@ -8,6 +8,7 @@ class Files
 
      function __construct($accessToken){
          $this->accessToken = $accessToken;
+         echo "test";
      }
 
     /**
@@ -30,6 +31,8 @@ class Files
              "allow_shared_folder" => $allow_shared_folder, "autorename" => $autorename, "allow_ownership_transfer" => $allow_ownership_transfer));
          return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
      }
+
+
 
     /** Created the entry class to call the different files
      *  that I want to copy from one dest to other
