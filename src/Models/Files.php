@@ -83,16 +83,16 @@ class Files
 
     /**
      * @param $path
-     * @param bool $include_media_info
-     * @param bool $include_deleted
-     * @param bool $include_has_explicit_shared_members
+     * @param bool $includeMediaInfo
+     * @param bool $includeDeleted
+     * @param bool $includeHasExplicitSharedMembers
      * @return mixed|string
      */
 
-    public function getMetadata($path, $include_media_info = false, $include_deleted = false, $include_has_explicit_shared_members = false) {
+    public function getMetadata($path, $includeMediaInfo = false, $includeDeleted = false, $includeHasExplicitSharedMembers = false) {
         $endPoint = "https://api.dropboxapi.com/2/files/get_metadata";
-        $data = json_encode(array( "path" => $path, "include_media_info" => $include_media_info,
-                    "include_deleted" => $include_deleted, "include_has_explicit_shared_members" => $include_has_explicit_shared_members));
+        $data = json_encode(array( "path" => $path, "include_media_info" => $includeMediaInfo,
+            "include_deleted" => $includeDeleted, "include_has_explicit_shared_members" => $includeHasExplicitSharedMembers));
         return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
     }
 
@@ -100,18 +100,19 @@ class Files
     /**
      * @param $path
      * @param bool $recursive
-     * @param bool $include_media_info
-     * @param bool $include_deleted
-     * @param bool $include_has_explicit_shared_members
-     * @param bool $include_mounted_folders
-     * @param bool $include_non_downloadable_files
+     * @param bool $includeMediaInfo
+     * @param bool $includeDeleted
+     * @param bool $includeHasExplicitSharedMembers
+     * @param bool $includeMountedFolders
+     * @param bool $includeNonDownloadableFiles
      * @return mixed|string
      */
-    public function listFolder($path, $recursive = false, $include_media_info = false, $include_deleted =false, $include_has_explicit_shared_members=false, $include_mounted_folders=true, $include_non_downloadable_files=true){
+    public function listFolder($path, $recursive = false, $includeMediaInfo = false, $includeDeleted =false,
+                               $includeHasExplicitSharedMembers=false, $includeMountedFolders=true, $includeNonDownloadableFiles=true){
         $endPoint = "https://api.dropboxapi.com/2/files/list_folder";
-        $data = json_encode(array("path" => $path, "recursive" => $recursive, "include_media_info" => $include_media_info, "include_deleted" => $include_deleted,
-                    "include_has_explicit_shared_members" => $include_has_explicit_shared_members,"include_mounted_folders" => $include_mounted_folders,
-                    "include_non_downloadable_files" => $include_non_downloadable_files));
+        $data = json_encode(array("path" => $path, "recursive" => $recursive, "include_media_info" => $includeMediaInfo, "include_deleted" => $includeDeleted,
+            "include_has_explicit_shared_members" => $includeHasExplicitSharedMembers,"include_mounted_folders" => $includeMountedFolders,
+            "include_non_downloadable_files" => $includeNonDownloadableFiles));
         return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
     }
 
@@ -129,19 +130,20 @@ class Files
     /**
      * @param $path
      * @param bool $recursive
-     * @param bool $include_media_info
-     * @param bool $include_deleted
-     * @param bool $include_has_explicit_shared_members
-     * @param bool $include_mounted_folders
-     * @param bool $include_non_downloadable_files
+     * @param bool $includeMediaInfo
+     * @param bool $includeDeleted
+     * @param bool $includeHasExplicitSharedMembers
+     * @param bool $includeMountedFolders
+     * @param bool $includeNonDownloadableFiles
      * @return mixed|string
      */
 
-    public function getLatestCursor($path, $recursive = false, $include_media_info = false, $include_deleted =false, $include_has_explicit_shared_members=false, $include_mounted_folders=true, $include_non_downloadable_files=true){
+    public function getLatestCursor($path, $recursive = false, $includeMediaInfo = false, $includeDeleted =false,
+                                    $includeHasExplicitSharedMembers=false, $includeMountedFolders=true, $includeNonDownloadableFiles=true){
         $endPoint = "https://api.dropboxapi.com/2/files/list_folder/get_latest_cursor";
-        $data = json_encode(array("path" => $path, "recursive" => $recursive, "include_media_info" => $include_media_info, "include_deleted" => $include_deleted,
-            "include_has_explicit_shared_members" => $include_has_explicit_shared_members,"include_mounted_folders" => $include_mounted_folders,
-            "include_non_downloadable_files" => $include_non_downloadable_files));
+        $data = json_encode(array("path" => $path, "recursive" => $recursive, "include_media_info" => $includeMediaInfo, "include_deleted" => $includeDeleted,
+            "include_has_explicit_shared_members" => $includeHasExplicitSharedMembers,"include_mounted_folders" => $includeMountedFolders,
+            "include_non_downloadable_files" => $includeNonDownloadableFiles));
         return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
     }
 
