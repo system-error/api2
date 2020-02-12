@@ -25,16 +25,12 @@ class Files
      * @param bool $allowOwnershipTransfer
      * @return mixed|string
      */
-
     public function copy($fromPath,$toPath,$allowShared_folder=false,$autorename=false,$allowOwnershipTransfer=false){
          $endPoint = "https://api.dropboxapi.com/2/files/copy_v2";
          $data = json_encode(array( "from_path" => $fromPath, "to_path" => $toPath,
              "allow_shared_folder" => $allowShared_folder, "autorename" => $autorename, "allow_ownership_transfer" => $allowOwnershipTransfer));
          return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
     }
-
-
-
 
     /** Created the entry class to call the different files
      *  that I want to copy from one dest to other
