@@ -219,6 +219,6 @@ class Files
         }
     }
 
-    private function validateTheDownloadingProcess
+    private function validateTheDownloadingProcess{}
 
 }
