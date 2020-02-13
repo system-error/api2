@@ -174,10 +174,17 @@ class Files
     }
 
     public function getThumbnail($parameters) {
-        $endPoint = "https://api.dropboxapi.com/2/files/get_temporary_upload_link";
-        $headers = array("Content-Type: application/octet-stream","Dropbox-API-Arg: {\"path\":\"$parameters\"}");
+        $parameters = json_encode($parameters[0]);
+        $endPoint = "https://content.dropboxapi.com/2/files/get_thumbnail";
+        $headers = array("Content-Type: application/octet-stream","Dropbox-API-Arg: ".$parameters);
         $data ='';
-        return $this->validateTheData(Request::postRequest($endPoint,$headers,$data,$this->accessToken));
+//        return $this->validateTheData(Request::postRequest($endPoint,$headers,$data,$this->accessToken,false));
+       $test= Request::postRequest($endPoint,$headers,$data,$this->accessToken,false);
+        $test = base64_encode($test);
+
+        echo '<img src="'.$test.' "/>';
+        die();
+
     }
 
 

@@ -13,7 +13,7 @@ $token = new Request();
 $token = $token->getToken($callBackUrl,$secretId,$appSecret);
 $user = new Users($token);
 $files = new Files($token);
-$entry = new Entry();
+
 //$token = $_SESSION["accessToken"]; if I want it
 
 
@@ -58,7 +58,7 @@ echo "<br>";
 
 
 
-//$entries = [$entry->getEntries('/python/FSM_OOP.py','/cyberCrime/FSM_OOP.py'),$entry->getEntries('/python/FSM.py','/cyberCrime/FSM.py'),$entry->getEntries('/python/states.py','/cyberCrime/states.py')] ;
+//$entries = [Entry::getEntries('/python/FSM_OOP.py','/cyberCrime/FSM_OOP.py'),Entry::getEntries('/python/FSM.py','/cyberCrime/FSM.py'),Entry::getEntries('/python/states.py','/cyberCrime/states.py')] ;
 //$thefiles = $files->copyBatch($entries,false);
 //print_r($thefiles);
 //echo "<br>";
@@ -87,7 +87,7 @@ echo "<br>";
 
 //$paths = array('/test1.txt','/test2.txt','/test3.txt');
 //
-//$paths = $entry->getMultiplePaths($paths);
+//$paths = Entry::getMultiplePaths($paths);
 //print_r($paths);
 //echo "<br>";
 //echo "<br>";
@@ -107,7 +107,7 @@ echo "<br>";
 //print_r($thefiles);
 //print_r($thefiles['link']);
 
-//$test = $entry->getCommitInfo('/test.txt');
+//$test = Entry::getCommitInfo('/test.txt');
 //$thefiles =$files->getTemporaryUploadLink($test);
 //echo $thefiles['link'];
 //print_r($thefiles);
@@ -115,12 +115,15 @@ echo "<br>";
 
 
 
-$test = new Entry();
 
-$tmumbs = array(new Thumbnail('/text.txt'));
 
-$testaki = $test->getThumbnailParameters($tmumbs);
-print_r($testaki);
+$tmumbs = array(new Thumbnail('/python/images-6.jpg'));
+
+$testaki = Entry::getThumbnailParameters($tmumbs);
+
+$giapame = $files->getThumbnail($testaki);
+
+print_r($giapame);
 
 
 
