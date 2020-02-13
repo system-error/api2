@@ -12,7 +12,7 @@ $token = $token->getToken($callBackUrl,$secretId,$appSecret);
 $user = new Users($token);
 $files = new Files($token);
 $entry = new Entry();
-//$token = $_SESSION["accessToken"];
+//$token = $_SESSION["accessToken"]; if I want it
 
 
 
@@ -70,11 +70,11 @@ echo "<br>";
 //$thefiles = $files->copyReferenceSave("AAAAAAVa1fx6ZnVwaGYzcGpodGQ",'/Chapter 1b.pptx');
 //print_r($thefiles);
 
-//$thefiles = $files->createFolder("/python/test",false);
+//$thefiles = $files->createFolder("/python/test1",false);
 //print_r($thefiles);
 
 //$paths = array('/python/test','/python/test1','/python/tes2');
-////$paths = $entry->getMultiplePaths($paths);
+
 //$thefiles = $files->createFolderBatch($paths,false,false);
 //print_r($thefiles);
 
@@ -83,16 +83,21 @@ echo "<br>";
 //$thefiles = $files->deleteFiles("/test.txt");
 //print_r($thefiles);
 
-$paths = array('/test1.txt','/test2.txt','/test3.txt');
-
-$paths = $entry->getMultiplePaths($paths);
-
-$thefiles = $files->deleteFilesBatch($paths);
-print_r($thefiles);
-
-
+//$paths = array('/test1.txt','/test2.txt','/test3.txt');
+//
+//$paths = $entry->getMultiplePaths($paths);
+//
+//$thefiles = $files->deleteFilesBatch($paths);
+//print_r($thefiles);
 
 
+//$thefiles =$files->downloadFile('/Chapter4.pptx');
+//$thefiles =$files->downloadZip('/python');
+//echo $thefiles;
+//print_r($thefiles);
+//$thefiles =$files->getPrieview('id:lzJrbPHQIYAAAAAAAADWjQ');
+//$thefiles =$files->getMetadata('/templates.xlsx');
+//print_r($thefiles);
 
 
 
