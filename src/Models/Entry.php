@@ -14,8 +14,6 @@ class Entry
             $path[$x] = array('path'=>$paths[$x]);
         }
         return $path;
-
-
     }
 
 
