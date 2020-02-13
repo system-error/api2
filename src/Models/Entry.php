@@ -9,14 +9,33 @@ class Entry
     }
 
     public function getMultiplePaths($paths){
-        $path = array();
         for($x=0; $x<count($paths); $x++){
-            $path[$x] = array('path'=>$paths[$x]);
+            $path[] = array('path'=>$paths[$x]);
         }
         return $path;
-
-
     }
+
+    public function getCommitInfo($path, $mode="add", $autorename = true, $mute = false, $strictConflicet = false){
+        return array('path'=>$path,
+                    'mode'=>$mode,
+                    'autorename'=>$autorename,
+                    'mute'=>$mute,
+                    'strict_conflict'=>$strictConflicet);
+    }
+
+    public function getThumbnailParameters($thumbnail){
+        for($x=0; $x<count($thumbnail); $x++){
+            $parameters[] = array('path'=> $thumbnail[$x]->path,
+                                    'format'=>$thumbnail[$x]->format,
+                                    'size'=>$thumbnail[$x]->size,
+                                    'mode'=>$thumbnail[$x]->mode) ;
+        }
+        return $parameters;
+    }
+
+
+
+
 
 
 

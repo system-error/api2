@@ -6,6 +6,8 @@ require "src/Models/Request.php";
 require "src/Models/Users.php";
 require "src/Models/Files.php";
 require "src/Models/Entry.php";
+require "src/Models/Thumbnail.php";
+
 
 $token = new Request();
 $token = $token->getToken($callBackUrl,$secretId,$appSecret);
@@ -86,7 +88,9 @@ echo "<br>";
 //$paths = array('/test1.txt','/test2.txt','/test3.txt');
 //
 //$paths = $entry->getMultiplePaths($paths);
-//
+//print_r($paths);
+//echo "<br>";
+//echo "<br>";
 //$thefiles = $files->deleteFilesBatch($paths);
 //print_r($thefiles);
 
@@ -98,9 +102,25 @@ echo "<br>";
 //$thefiles =$files->getPrieview('id:lzJrbPHQIYAAAAAAAADWjQ');
 //$thefiles =$files->getMetadata('/templates.xlsx');
 //print_r($thefiles);
+//$thefiles =$files->getTemporaryLink('/templates.xlsx');
+//$thefiles =$files->getTemporaryUploadLink('/templates.xlsx');
+//print_r($thefiles);
+//print_r($thefiles['link']);
+
+//$test = $entry->getCommitInfo('/test.txt');
+//$thefiles =$files->getTemporaryUploadLink($test);
+//echo $thefiles['link'];
+//print_r($thefiles);
+//print_r($test);
 
 
 
+$test = new Entry();
+
+$tmumbs = array(new Thumbnail('/text.txt'));
+
+$testaki = $test->getThumbnailParameters($tmumbs);
+print_r($testaki);
 
 
 

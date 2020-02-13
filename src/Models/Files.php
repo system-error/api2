@@ -166,6 +166,22 @@ class Files
 
 
 
+    public function getTemporaryUploadLink($commitInfo, $durationTime = 14400) {
+        $endPoint = "https://api.dropboxapi.com/2/files/get_temporary_upload_link";
+        $data = json_encode(array( "commit_info" => $commitInfo,
+                                    "duration"=>$durationTime));
+        return $this->validateTheData(Request::postRequest($endPoint,$this->headers,$data,$this->accessToken));
+    }
+
+    public function getThumbnail($parameters) {
+        $endPoint = "https://api.dropboxapi.com/2/files/get_temporary_upload_link";
+        $headers = array("Content-Type: application/octet-stream","Dropbox-API-Arg: {\"path\":\"$parameters\"}");
+        $data ='';
+        return $this->validateTheData(Request::postRequest($endPoint,$headers,$data,$this->accessToken));
+    }
+
+
+
     /**
      * @param string $path
      * @param bool $recursive
