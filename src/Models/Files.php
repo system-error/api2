@@ -29,7 +29,7 @@ class Files
          $endPoint = "https://api.dropboxapi.com/2/files/copy_v2";
          $data = json_encode(array( "from_path" => $fromPath, "to_path" => $toPath,
              "allow_shared_folder" => $allowShared_folder, "autorename" => $autorename, "allow_ownership_transfer" => $allowOwnershipTransfer));
-         return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
+         return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,$this->accessToken));
      }
 
     /** Created the entry class to call the different files
@@ -42,19 +42,19 @@ class Files
      public function copyBatch($entries, $autorename=false){
          $endPoint = "https://api.dropboxapi.com/2/files/copy_batch_v2";
          $data = json_encode(array("entries" => $entries, "autorename" =>$autorename));
-         return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
+         return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,$this->accessToken));
      }
 
     public function copyBatchCheck($asyncJobId){
         $endPoint = "https://api.dropboxapi.com/2/files/copy_batch/check_v2";
         $data = json_encode(array("async_job_id" => $asyncJobId));
-        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
+        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,$this->accessToken));
     }
 
     public function copyReferenceGet($path){
         $endPoint = "https://api.dropboxapi.com/2/files/copy_reference/get";
         $data = json_encode(array( "path" => $path));
-        $copy_reference = $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
+        $copy_reference = $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,$this->accessToken));
 
         // depending what I want I have the choice to take only the reference or all the results
 
@@ -68,43 +68,43 @@ class Files
     public function copyReferenceSave($copyReference,$path){
         $endPoint = "https://api.dropboxapi.com/2/files/copy_reference/save";
         $data = json_encode(array( "copy_reference" => $copyReference,"path" => $path));
-        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
+        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,$this->accessToken));
     }
 
     public function createFolder($path,$autorename=false){
         $endPoint = "https://api.dropboxapi.com/2/files/create_folder_v2";
         $data = json_encode(array( "path" => $path,"autorename" => $autorename));
-        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
+        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,$this->accessToken));
     }
 
     public function createFolderBatch($paths,$autorename=false,$forceAsync = false){
         $endPoint = "https://api.dropboxapi.com/2/files/create_folder_batch";
         $data = json_encode(array( "paths" =>$paths,"autorename" => $autorename,'force_async'=>$forceAsync));
-        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
+        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,$this->accessToken));
     }
 
     public function createFolderBatchCheck($asyncJobId){
          $endPoint = "https://api.dropboxapi.com/2/files/create_folder_batch/check";
          $data = $data = json_encode(array( "async_job_id" => $asyncJobId));
-        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
+        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,$this->accessToken));
     }
 
     public function deleteFiles($path){
         $endPoint = "https://api.dropboxapi.com/2/files/delete_v2";
         $data = json_encode(array( "path" => $path));
-        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
+        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,$this->accessToken));
     }
 
     public function deleteFilesBatch($paths){
         $endPoint = "https://api.dropboxapi.com/2/files/delete_batch";
         $data = json_encode(array( "entries" => $paths));
-        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
+        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,$this->accessToken));
     }
 
     public function deleteFilesBatchCheck($asyncJobId){
         $endPoint = "https://api.dropboxapi.com/2/files/delete_batch/check";
         $data = json_encode(array( "async_job_id" => $asyncJobId));
-        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
+        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,$this->accessToken));
     }
 
     /**
@@ -120,7 +120,7 @@ class Files
          $headers = array("Content-Type: application/octet-stream",
              "Dropbox-API-Arg: ".$path);
          $data = '';
-         $thedata = $this->validateTheData(Request::postRequest($endPoint,$headers,$data,false,$this->accessToken));
+         $thedata = $this->validateTheData(Request::postRequest($endPoint,$headers,$data,$this->accessToken,false));
          $fp = fopen($filename,"wb");
         return $this->validateTheDownloadingProcess($fp,$thedata);
     }
@@ -131,7 +131,7 @@ class Files
         $headers = array("Content-Type: application/octet-stream",
             "Dropbox-API-Arg: ".$path);
         $data = '';
-        $thedata = $this->validateTheData(Request::postRequest($endPoint,$headers,$data,false,$this->accessToken));
+        $thedata = $this->validateTheData(Request::postRequest($endPoint,$headers,$data,$this->accessToken,false));
         $fp = fopen($filename.".zip","wb");
         return $this->validateTheDownloadingProcess($fp,$thedata);
     }
@@ -148,15 +148,23 @@ class Files
         $endPoint = "https://api.dropboxapi.com/2/files/get_metadata";
         $data = json_encode(array( "path" => $path, "include_media_info" => $includeMediaInfo,
                     "include_deleted" => $includeDeleted, "include_has_explicit_shared_members" => $includeHasExplicitSharedMembers));
-        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
+        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,$this->accessToken));
     }
 
     public function getPrieview($path) {
         $endPoint = "https://content.dropboxapi.com/2/files/get_preview";
-        $headers = array("Content-Type: text/plain; charset=utf-8","Dropbox-API-Arg: {\"path\":\"$path\"}");
-        $data = '';
-        return $this->validateTheData(Request::postRequest($endPoint,$headers,$data,false,$this->accessToken));
+        $headers = array("Content-Type: application/octet-stream","Dropbox-API-Arg: {\"path\":\"$path\"}");
+        $data ='';
+        return $this->validateTheData(Request::postRequest($endPoint,$headers,$data,$this->accessToken,false));
     }
+
+    public function getTemporaryLink($path) {
+        $endPoint = "https://api.dropboxapi.com/2/files/get_temporary_link";
+        $data = json_encode(array( "path" => $path));
+        return $this->validateTheData(Request::postRequest($endPoint,$this->headers,$data,$this->accessToken));
+    }
+
+
 
     /**
      * @param string $path
@@ -211,8 +219,6 @@ class Files
 
 
     private function validateTheData($theData){
-        echo $theData;
-        die();
         if($theData == null || isset($theData['error'])){
             if(isset($theData['error'])){
                 return $theData['error_summary'];

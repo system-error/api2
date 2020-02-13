@@ -70,7 +70,7 @@ echo "<br>";
 //$thefiles = $files->copyReferenceSave("AAAAAAVa1fx6ZnVwaGYzcGpodGQ",'/Chapter 1b.pptx');
 //print_r($thefiles);
 
-//$thefiles = $files->createFolder("/python/test",false);
+//$thefiles = $files->createFolder("/python/test1",false);
 //print_r($thefiles);
 
 //$paths = array('/python/test','/python/test1','/python/tes2');
@@ -95,8 +95,9 @@ echo "<br>";
 //$thefiles =$files->downloadZip('/python');
 //echo $thefiles;
 //print_r($thefiles);
-$thefiles =$files->getPrieview('/Christos Dousmanopoulos_CV.docx');
-print_r($thefiles);
+//$thefiles =$files->getPrieview('id:lzJrbPHQIYAAAAAAAADWjQ');
+//$thefiles =$files->getMetadata('/templates.xlsx');
+//print_r($thefiles);
 
 
 
