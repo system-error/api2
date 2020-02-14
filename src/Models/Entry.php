@@ -31,6 +31,7 @@ class Entry
                                 'mode'=>$thumbnail[$x]->mode);
         }
         return $parameters;
+
     }
 
 

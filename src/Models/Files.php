@@ -3,12 +3,13 @@
 
 class Files
 {
-     private $headers= array("Content-Type: application/json");
-     private $accessToken;
+    private $headers= array("Content-Type: application/json");
+    private $accessToken;
 
      function __construct($accessToken){
          $this->accessToken = $accessToken;
      }
+
 
     /**
      *  The from_path is the filename that we want to copy and
@@ -32,18 +33,19 @@ class Files
          return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,$this->accessToken));
      }
 
+
     /** Created the entry class to call the different files
      *  that I want to copy from one dest to other
      * @param list $entries
      * @param bool $autorename
      * @return mixed|string
      */
-
      public function copyBatch($entries, $autorename=false){
          $endPoint = "https://api.dropboxapi.com/2/files/copy_batch_v2";
          $data = json_encode(array("entries" => $entries, "autorename" =>$autorename));
          return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,$this->accessToken));
      }
+
 
     public function copyBatchCheck($asyncJobId){
         $endPoint = "https://api.dropboxapi.com/2/files/copy_batch/check_v2";
