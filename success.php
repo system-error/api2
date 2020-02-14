@@ -159,6 +159,17 @@ echo "<br>";
 
 
 
+//$thefiles = $files->move('/test3.txt','/cyberCrime/test3.txt');
+
+//$entries = array(Entry::getEntries('/test3.txt','/cyberCrime/test3.txt'));
+//$thefiles = $files->moveBatch($entries);
+
+
+
+
+
+
+
 
 
 
@@ -174,7 +185,7 @@ echo "<br>";
 //    $user1 = $user->getCurrentAccount($token->access_token);
 //    print_r($user1);
 //}else{
-//    echo "Now token";
+//    echo "No token";
 //}
 
 //$token = 'TB9EqqtY0LMAAAAAAAAKdSZIesB5hbeaCRlM-medSu_BSICZiNJyhooNf9MRZy23';

@@ -241,11 +241,35 @@ class Files
         $data = json_encode(array("path" => $path, "recursive" => $recursive, "include_media_info" => $includeMediaInfo, "include_deleted" => $includeDeleted,
             "include_has_explicit_shared_members" => $includeHasExplicitSharedMembers,"include_mounted_folders" => $includeMountedFolders,
             "include_non_downloadable_files" => $includeNonDownloadableFiles));
-        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
+        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data, $this->accessToken));
     }
 
+    public function move($fromPath,$toPath,$allowShared_folder=false,$autorename=false,$allowOwnershipTransfer=false){
+        $endPoint = "https://api.dropboxapi.com/2/files/move_v2";
+        $data = json_encode(array( "from_path" => $fromPath, "to_path" => $toPath,
+            "allow_shared_folder" => $allowShared_folder, "autorename" => $autorename, "allow_ownership_transfer" => $allowOwnershipTransfer));
+        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data, $this->accessToken));
+    }
 
+    public function moveBatch($entries, $autorename = false, $allowOwnershipTransfer = false){
+        $endPoint = "https://api.dropboxapi.com/2/files/move_batch_v2";
+        $data = json_encode(array("entries" => $entries, "autorename" =>$autorename,"allow_ownership_transfer"=>$allowOwnershipTransfer));
+        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,$this->accessToken));
+    }
+
+    /**
+     * It doesn't work for simple account only in Business
+     * @param $path
+     * @return mixed|string
+     */
+    public function permanentlyDelete($path){
+        $endPoint = "https://api.dropboxapi.com/2/files/permanently_delete";
+        $data = json_encode(array("path"=>$path));
+        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,$this->accessToken));
+    }
+    
     private function validateTheData($theData){
+
         if($theData == null || isset($theData['error'])){
             if(isset($theData['error'])){
                 return $theData['error_summary'];
