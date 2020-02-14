@@ -153,7 +153,7 @@ class Files
 
     public function getPrieview($path) {
         $endPoint = "https://content.dropboxapi.com/2/files/get_preview";
-        $headers = array("Content-Type: application/octet-stream","Dropbox-API-Arg: {\"path\":\"$path\"}");
+        $headers = array("Content-Type: application/octet-stream; charset=utf-8","Dropbox-API-Arg: {\"path\":\"$path\"}");
         $data ='';
         return $this->validateTheData(Request::postRequest($endPoint,$headers,$data,$this->accessToken,false));
     }
@@ -163,8 +163,6 @@ class Files
         $data = json_encode(array( "path" => $path));
         return $this->validateTheData(Request::postRequest($endPoint,$this->headers,$data,$this->accessToken));
     }
-
-
 
     public function getTemporaryUploadLink($commitInfo, $durationTime = 14400) {
         $endPoint = "https://api.dropboxapi.com/2/files/get_temporary_upload_link";
@@ -179,11 +177,8 @@ class Files
         $headers = array("Content-Type: application/octet-stream","Dropbox-API-Arg: ".$parameters);
         $data ='';
 //        return $this->validateTheData(Request::postRequest($endPoint,$headers,$data,$this->accessToken,false));
-       $test= Request::postRequest($endPoint,$headers,$data,$this->accessToken,false);
-        $test = base64_encode($test);
-
-        echo '<img src="'.$test.' "/>';
-        die();
+       $theImage = $this->validateTheData(Request::postRequest($endPoint,$headers,$data,$this->accessToken,false));
+        echo '<img src="data&colon;image/jpg;charset=utf8;base64,'.base64_encode($theImage).' "/>';
 
     }
 

@@ -99,7 +99,8 @@ echo "<br>";
 //$thefiles =$files->downloadZip('/python');
 //echo $thefiles;
 //print_r($thefiles);
-//$thefiles =$files->getPrieview('id:lzJrbPHQIYAAAAAAAADWjQ');
+$thefiles =$files->getPrieview('/templates.xlsx');
+//print_r($thefiles);
 //$thefiles =$files->getMetadata('/templates.xlsx');
 //print_r($thefiles);
 //$thefiles =$files->getTemporaryLink('/templates.xlsx');
@@ -113,17 +114,12 @@ echo "<br>";
 //print_r($thefiles);
 //print_r($test);
 
-
-
-
-
-$tmumbs = array(new Thumbnail('/python/images-6.jpg'));
-
-$testaki = Entry::getThumbnailParameters($tmumbs);
-
-$giapame = $files->getThumbnail($testaki);
-
-print_r($giapame);
+//$thumbs = array(new Thumbnail('/python/images-6.jpg'));
+//
+//$thumbs = Entry::getThumbnailParameters($thumbs);
+//
+//$thefiles = $files->getThumbnail($thumbs);
+//print_r($thefiles);
 
 
 
