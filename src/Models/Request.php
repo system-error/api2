@@ -5,10 +5,10 @@ require "config.php";
 class Request
 {
 
-    public static function postRequest($endPoint, $headers, $data, $accessToken='',$json = TRUE) {
+    public static function postRequest($endPoint, $headers, $data, $accessToken='',$json = true) {
         $ch = curl_init($endPoint);
         array_push($headers, "Authorization: Bearer " . $accessToken);
-        curl_setopt($ch, CURLOPT_POST, TRUE);
+        curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
@@ -28,7 +28,7 @@ class Request
                 'grant_type' => 'authorization_code',
                 'redirect_uri' => $callBackUrl);
             $ch = curl_init($uri);
-            curl_setopt($ch, CURLOPT_POST, TRUE);
+            curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
             curl_setopt($ch, CURLOPT_USERPWD, "$secretId:$appSecret");

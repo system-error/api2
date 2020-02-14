@@ -183,7 +183,7 @@ class Files
     public function getThumbnailBatch($parameters) {
         $endPoint = "https://content.dropboxapi.com/2/files/get_thumbnail_batch";
         $data =json_encode(array("entries" => $parameters));
-        return $this->validateTheData(Request::postRequest($endPoint,$this->headers,$data,$this->accessToken,true));
+        return $this->validateTheData(Request::postRequest($endPoint,$this->headers,$data,$this->accessToken));
 
         //An example inside the function.
 //        $theImage = $this->validateTheData(Request::postRequest($endPoint,$this->headers,$data,$this->accessToken,true));
@@ -210,7 +210,7 @@ class Files
         $data = json_encode(array("path" => $path, "recursive" => $recursive, "include_media_info" => $includeMediaInfo, "include_deleted" => $includeDeleted,
                     "include_has_explicit_shared_members" => $includeHasExplicitSharedMembers,"include_mounted_folders" => $includeMountedFolders,
                     "include_non_downloadable_files" => $includeNonDownloadableFiles));
-        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
+        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data, $this->accessToken));
     }
 
     /**
@@ -221,7 +221,7 @@ class Files
     public function listFolderContinue($cursor){
         $endPoint = "https://api.dropboxapi.com/2/files/list_folder/continue";
         $data = json_encode(array("cursor" => $cursor));
-        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,true,$this->accessToken));
+        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data, $this->accessToken));
     }
 
     /**
