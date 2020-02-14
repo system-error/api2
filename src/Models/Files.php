@@ -267,6 +267,18 @@ class Files
         $data = json_encode(array("path"=>$path));
         return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,$this->accessToken));
     }
+
+    public function saveUrl($path,$url){
+        $endPoint = "https://api.dropboxapi.com/2/files/save_url";
+        $data = json_encode(array("path"=>$path, "url"=> $url));
+        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,$this->accessToken));
+    }
+
+    public function saveUrlCheckJobStatus($asyncJobId){
+        $endPoint = "https://api.dropboxapi.com/2/files/save_url/check_job_status";
+        $data = json_encode(array("async_job_id"=>$asyncJobId));
+        return $this->validateTheData(Request::postRequest($endPoint, $this->headers, $data,$this->accessToken));
+    }
     
     private function validateTheData($theData){
 

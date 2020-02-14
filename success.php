@@ -164,6 +164,19 @@ echo "<br>";
 //$entries = array(Entry::getEntries('/test3.txt','/cyberCrime/test3.txt'));
 //$thefiles = $files->moveBatch($entries);
 
+//$asyncJobID = $files->saveUrl('/python/test3.txt','https://github.com/system-error/dropbox-api/tree/version1');
+//print_r($asyncJobID['async_job_id']);
+
+$checkStatus = $files->saveUrlCheckJobStatus('TB9EqqtY0LMAAAAAAAALDA');
+
+if ($checkStatus)
+
+
+
+
+print_r($checkStatus);
+
+
 
 
 
