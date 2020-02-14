@@ -179,10 +179,19 @@ class Files
 //        return $this->validateTheData(Request::postRequest($endPoint,$headers,$data,$this->accessToken,false));
        $theImage = $this->validateTheData(Request::postRequest($endPoint,$headers,$data,$this->accessToken,false));
         echo '<img src="data&colon;image/jpg;charset=utf8;base64,'.base64_encode($theImage).' "/>';
-
     }
+    public function getThumbnailBatch($parameters) {
+        $endPoint = "https://content.dropboxapi.com/2/files/get_thumbnail_batch";
+        $data =json_encode(array("entries" => $parameters));
+        return $this->validateTheData(Request::postRequest($endPoint,$this->headers,$data,$this->accessToken,true));
 
-
+        //An example inside the function.
+//        $theImage = $this->validateTheData(Request::postRequest($endPoint,$this->headers,$data,$this->accessToken,true));
+//        for ($x=0; $x<count($parameters); $x++ ){
+//            echo '<img src="data&colon;image/jpg;charset=utf8;base64,'.$theImage['entries'][$x]['thumbnail'].' "/>';
+//            echo "<br>";
+//        }
+    }
 
     /**
      * @param string $path

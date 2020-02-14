@@ -99,7 +99,7 @@ echo "<br>";
 //$thefiles =$files->downloadZip('/python');
 //echo $thefiles;
 //print_r($thefiles);
-$thefiles =$files->getPrieview('/templates.xlsx');
+//$thefiles =$files->getPrieview('/Christos Dousmanopoulos_CV.docx');
 //print_r($thefiles);
 //$thefiles =$files->getMetadata('/templates.xlsx');
 //print_r($thefiles);
@@ -119,6 +119,16 @@ $thefiles =$files->getPrieview('/templates.xlsx');
 //$thumbs = Entry::getThumbnailParameters($thumbs);
 //
 //$thefiles = $files->getThumbnail($thumbs);
+//print_r($thefiles);
+
+$thumbs = array(new Thumbnail('/python/images-6.jpg'),new Thumbnail('/python/images-14.jpg'),new Thumbnail('/python/images-21.jpg'));
+
+$thumbs = Entry::getThumbnailParameters($thumbs);
+$thefiles = $files->getThumbnailBatch($thumbs);
+for ($x=0; $x<count($thumbs); $x++ ){
+    echo '<img src="data&colon;image/jpg;charset=utf8;base64,'.$thefiles['entries'][$x]['thumbnail'].' "/>';
+    echo "<br>";
+}
 //print_r($thefiles);
 
 

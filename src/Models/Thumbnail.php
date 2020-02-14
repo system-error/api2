@@ -21,7 +21,7 @@ class Thumbnail
      * "fitone_bestfit" => Scale down the image to completely cover the given size or its transpose
      */
 
-    function __construct($path, $format="jpeg", $size = "small", $mode= "strict")
+    function __construct($path, $format = "jpeg", $size = "small", $mode = "strict")
     {
         $this->path = $path;
         $this->format = $format;
